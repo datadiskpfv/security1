@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+    <meta charset="UTF-8">
+    <title>Index web page</title>
+</head>
+<body>
+<p>Index web page</p>
+
+<div class="row" th:if="${#authentication}">
+    <br />User Details: <span th:text="${#authentication.getDetails()}"></span>
+    <br />User Principal: <span th:text="${#authentication.getPrincipal()}"></span>
+    <br />
+    <br />Logged user: <span sec:authentication="name"></span>
+    <br />Roles: <span sec:authentication="authorities"></span>
+    <br />Principle: <span sec:authentication="principal"></span>
+    <br />Details: <span sec:authentication="details"></span>
+    <br /><br />
+</div>
+<div class="row">
+    <div sec:authorize="isAuthenticated()">
+        if authenticated you should see this, we are using Thymeleaf isAuthenticated()
+    </div>
+
+    <div sec:authorize="hasAuthority('ADMIN')">
+        This content is only shown to ADMINISTRATORS.
+    </div>
+    <div sec:authorize="hasAuthority('USER')">
+        This content is only shown to USERS.
+    </div>
+    <div sec:authorize="hasAuthority('DATALOADER99')">
+        This content is only shown to DATALOADERS.
+    </div>
+
+    <div>
+        <h3>Session details</h3>
+        <div th:text="${#session}"> authentication</div>
+        <div th:text="${session.roles}"> authentication</div>
+
+        <br>
+        <p>Session Data</p>
+        <div>Role 1: <span th:text="${session.roles[0].getRoleName()}"> Role1</span></div>
+        <div>Role 2:<span th:text="${session.roles[1].getRoleName()}"> Role2</span></div>
+        <div>Username:<span th:text="${session.username}"> Role2</span></div>
+        <div>ID:<span th:text="${session.id}"> Role2</span></div>
+
+    </div>
+</div>
+
+</body>
+</html>

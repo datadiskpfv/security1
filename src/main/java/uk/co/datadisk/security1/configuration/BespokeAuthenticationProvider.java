@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 //import org.springframework.security.core.GrantedAuthority;
@@ -89,4 +90,14 @@ public class BespokeAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> auth) {
         return UsernamePasswordAuthenticationToken.class.equals(auth);
     }
+
+    // create two users, admin and user
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//
+//        auth.inMemoryAuthentication()
+//                .withUser("user5").password("password5").roles("USER")
+//                .and()
+//                .withUser("user6").password("password6").roles("ADMIN");
+//    }
 }

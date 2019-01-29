@@ -1,7 +1,9 @@
 package uk.co.datadisk.security1.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -30,6 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(bespokeAuthenticationProvider)
                 .authorizeRequests()
                     .antMatchers("/users/**").hasAuthority("ADMIN")
+                    .antMatchers("/**").hasAnyAuthority("USER")
+
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
@@ -53,6 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable();
     }
 
+    // Used so that users dont have to authenticate for the below resources
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "/images/**", "/js/**", "/css/**");
+    }
 }
-
-
